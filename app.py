@@ -10,7 +10,7 @@ df = pd.read_csv("listings.csv")
 
 
 
-listings = df[['neighbourhood_cleansed','estimated_occupancy_l365d','reviews_per_month', 'price', 'number_of_reviews', 'availability_365','property_type','price_quote_price_per_night','estimated_revenue_l365d','bathrooms','bedrooms','beds','minimum_nights','maximum_nights','review_scores_rating']]
+listings = df[['neighbourhood_cleansed','estimated_occupancy_l365d', 'number_of_reviews','property_type','price_quote_price_per_night','estimated_revenue_l365d','bathrooms','bedrooms','minimum_nights','review_scores_rating']]
 
 
 #filter out undesired data
@@ -86,7 +86,7 @@ st.altair_chart(
     x = alt.X('minimum_nights:Q', bin = alt.Bin(maxbins = 20)),
     y = alt.Y('estimated_occupancy_l365d:Q', bin = alt.Bin(maxbins = 20)),
     color = "count():Q",
-    tooltip=["mean(estimated_revenue_l365d):Q", "estimated_occupancy_l365d:Q", "minimum_nights:Q","count():Q"]
+    tooltip=["mean(estimated_revenue_l365d):Q", "mean(estimated_occupancy_l365d):Q", "mean(minimum_nights):Q","count():Q"]
 )
 )
 
