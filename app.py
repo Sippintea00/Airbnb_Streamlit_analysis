@@ -63,6 +63,7 @@ st.sidebar.header("Filters")
 
 # Sidebar Filters
 category = st.sidebar.selectbox("Filter By Rental Type", ["All"] + list(listings["property_category"].unique()))
+
 revenue_range = st.sidebar.slider("Select Estimated Revenue Range",
      int(listings["estimated_revenue_l365d"].min()), 
      int(listings["estimated_revenue_l365d"].max()), 
@@ -70,7 +71,7 @@ revenue_range = st.sidebar.slider("Select Estimated Revenue Range",
 
 
 #applying dilters
-filtered_listings = listings if category == "All" else listings["property_category"] == category
+filtered_listings = listings if category == "All" else listings[listings["property_category"] == category]
 filtered_listings = filtered_listings[filtered_listings["estimated_revenue_l365d"].between(*revenue_range)]
 
 
