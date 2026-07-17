@@ -64,6 +64,9 @@ st.sidebar.header("Filters")
 # Sidebar Filters
 category = st.sidebar.selectbox("Filter By Rental Type", ["All"] + list(listings["property_category"].unique()))
 
+location = st.sidebar.selectbox("Filter By neighborhood", ["All"] + list(listings["neighbourhood_cleansed"].unique()))
+
+
 revenue_range = st.sidebar.slider("Select Estimated Revenue Range",
      int(listings["estimated_revenue_l365d"].min()), 
      int(listings["estimated_revenue_l365d"].max()), 
@@ -72,6 +75,7 @@ revenue_range = st.sidebar.slider("Select Estimated Revenue Range",
 
 #applying dilters
 filtered_listings = listings if category == "All" else listings[listings["property_category"] == category]
+filtered_listings = filtered_listings if location == "All" else filtered_listings[filtered_listings["neighbourhood_cleansed"] == location]
 filtered_listings = filtered_listings[filtered_listings["estimated_revenue_l365d"].between(*revenue_range)]
 
 
@@ -86,7 +90,7 @@ st.altair_chart(
 )
 )
 
-st.write("Estimated price per night over number of bedrooms")
+st.write("*Estimated price per night over number of bedrooms*")
 
 chart_type = st.radio("Choose Chart Type", ["Scatterplot", "Bar Chart"])
 
@@ -95,7 +99,7 @@ if chart_type == "Scatterplot":
     alt.Chart(filtered_listings).mark_circle().encode(
     x = alt.X("bedrooms:Q"),
     y = alt.Y("price_quote_price_per_night:Q"),
-    color = "bedrooms:Q",
+    #color = "bathrooms:Q",
     tooltip=["price_quote_price_per_night:Q","bedrooms:Q","bathrooms:Q","estimated_revenue_l365d"]
     )
 )
@@ -112,7 +116,7 @@ else:
         )
     )    
 
-st.write("Estimated annual revenue over the price per night")
+st.write("*Estimated annual revenue over the price per night*")
 
 st.altair_chart(
     alt.Chart(filtered_listings).mark_circle().encode(
