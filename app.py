@@ -92,7 +92,7 @@ st.altair_chart(
 
 st.write("*Estimated price per night over number of bedrooms*")
 
-chart_type = st.radio("Choose Chart Type", ["Scatterplot", "Bar Chart"])
+chart_type = st.radio("Choose Chart Type", ["Bar Chart", "Scatterplot"])
 
 if chart_type == "Scatterplot":
     st.altair_chart(
